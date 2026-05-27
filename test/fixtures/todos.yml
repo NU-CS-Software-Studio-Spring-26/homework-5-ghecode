@@ -2,6 +2,10 @@
 
 one:
   description: MyString
+  high_priority: false
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
 
 two:
   description: MyString
+  high_priority: false
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
