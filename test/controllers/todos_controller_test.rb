@@ -3,6 +3,7 @@ require "test_helper"
 class TodosControllerTest < ActionDispatch::IntegrationTest
   setup do
     @todo = todos(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
@@ -44,5 +45,22 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to todos_url
+  end
+
+  test "toggle_priority returns turbo stream response" do
+    patch toggle_priority_todo_url(@todo),
+          headers: { "Accept" => "text/vnd.turbo-stream.html" }
+
+    assert_response :success
+    assert_equal "text/vnd.turbo-stream.html", response.media_type
+  end
+
+  test "toggle_priority flips high_priority state" do
+    assert_equal false, @todo.high_priority
+
+    patch toggle_priority_todo_url(@todo),
+          headers: { "Accept" => "text/vnd.turbo-stream.html" }
+
+    assert_equal true, @todo.reload.high_priority
   end
 end
