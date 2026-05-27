@@ -1,0 +1,16 @@
+---
+description: Rails 8 conventions for the sample todo app
+alwaysApply: true
+---
+
+# Rails Conventions
+
+- **Turbo Streams over custom JS**: prefer `format.turbo_stream` + a `.turbo_stream.erb` view for any partial DOM update; do not write `fetch()` or `XMLHttpRequest` by hand.
+- **Keep migrations reversible**: every `change` migration must be reversible automatically, or use explicit `up`/`down` methods.
+- **Strong parameters always**: every controller that accepts user input must define a private `<resource>_params` method using `require` + `permit`; never pass `params` directly to model methods.
+- **Generate, don't hand-write boilerplate**: use `bin/rails generate model|controller|migration` so naming, file placement, and test stubs are consistent.
+- **Schema stays scoped**: do not add models, tables, or migrations unrelated to the todo domain; no cross-project imports.
+- **Partials for repeated markup**: any ERB block rendered more than once must be extracted to a partial in `app/views/<resource>/` or `app/views/shared/`.
+- **No inline styles or JS in ERB**: put styles in `app/assets/stylesheets/` and interactivity in Stimulus controllers under `app/javascript/controllers/`.
+- **RESTful routes only**: avoid non-RESTful custom actions unless the behavior genuinely cannot map to a standard CRUD verb.
+EOF
