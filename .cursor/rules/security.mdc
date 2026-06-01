@@ -1,0 +1,16 @@
+---
+description: Security rules for the sample todo app — enforced on every AI-generated change
+alwaysApply: true
+---
+
+# Security Rules
+
+- **Never write, log, or echo secrets**: API keys, `Rails.application.credentials`, environment variables, and session tokens must never appear in log output, HTTP responses, rendered views, or comments.
+- **No `eval` on user input**: do not call `eval`, `instance_eval`, `class_eval`, `send`, or `public_send` with data that originates from `params`, cookies, or any external source.
+- **No `html_safe` / `raw` on untrusted input**: only call `.html_safe` or `raw()` on strings that are entirely developer-controlled; never on `params` values or database content that users can write.
+- **Parameterized queries only**: use ActiveRecord finders (`where(column: value)`) or `sanitize_sql`; never interpolate user data into SQL strings (e.g. `where("name = '#{params[:name]}'")`).
+- **Do not disable CSRF protection**: never add `skip_before_action :verify_authenticity_token` to any controller; protect_from_forgery must remain active.
+- **Do not disable mass-assignment protection**: never use `permit!` or assign `params` directly to model attributes without an explicit `permit` list.
+- **Do not bypass Devise session checks**: never remove or skip Devise's `authenticate_user!` before actions that require authentication.
+- **No hardcoded credentials in source**: connection strings, passwords, and tokens belong in Rails credentials (`config/credentials.yml.enc`) or environment variables, never in plain Ruby files or ERB templates.
+EOF

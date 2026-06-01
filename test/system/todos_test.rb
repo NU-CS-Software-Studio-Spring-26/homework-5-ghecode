@@ -2,7 +2,9 @@ require "application_system_test_case"
 
 class TodosTest < ApplicationSystemTestCase
   setup do
+    @user = users(:one)
     @todo = todos(:one)
+    sign_in @user  # Devise helper
   end
 
   test "visiting the index" do
